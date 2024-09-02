@@ -57,6 +57,7 @@ export class ExperienceCommand extends Subcommand {
 			ok: async data => {
 				if (data === false) return;
 				await channel.send(`Congratulations ${user}, you have leveled up to level ${data.level}!`);
+				await interaction.editReply(`Successfully added ${amount} experience to ${user}.`);
 			},
 			err: async error => this.container.logger.error(error),
 		});

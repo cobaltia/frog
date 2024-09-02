@@ -74,10 +74,14 @@ export class LeaderboardSelectMenuHandler extends InteractionHandler {
 			.slice(0, 10);
 		const description = [];
 
-		for (const [index, userData] of users.entries()) {
-			const user = await this.container.client.users.fetch(userData.userId);
-			const vcTime = new DurationFormatter().format(userData.duration);
-			description.push(`${ONE_TO_TEN.get(index + 1)} ${inlineCode(` ${vcTime} `)} - ${user}`);
+		if (users.length) {
+			for (const [index, userData] of users.entries()) {
+				const user = await this.container.client.users.fetch(userData.userId);
+				const vcTime = new DurationFormatter().format(userData.duration);
+				description.push(`${ONE_TO_TEN.get(index + 1)} ${inlineCode(` ${vcTime} `)} - ${user}`);
+			}
+		} else {
+			description.push('No one has any VC time yet.');
 		}
 
 		const embed = new EmbedBuilder().setTitle('VC Time Leaderboard').setDescription(description.join('\n'));
