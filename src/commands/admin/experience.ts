@@ -1,5 +1,6 @@
 import { Subcommand } from '@sapphire/plugin-subcommands';
 import { Result } from '@sapphire/result';
+import { PermissionFlagsBits } from 'discord.js';
 import { getUser } from '#lib/database';
 import { handleExperience } from '#lib/utilities/experience';
 
@@ -17,6 +18,7 @@ export class ExperienceCommand extends Subcommand {
 			builder
 				.setName(this.name)
 				.setDescription(this.description)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 				.addSubcommand(command =>
 					command
 						.setName('add')
@@ -55,9 +57,9 @@ export class ExperienceCommand extends Subcommand {
 
 		await experienceResult.match({
 			ok: async data => {
+				await interaction.editReply(`Successfully added ${amount} experience to ${user}.`);
 				if (data === false) return;
 				await channel.send(`Congratulations ${user}, you have leveled up to level ${data.level}!`);
-				await interaction.editReply(`Successfully added ${amount} experience to ${user}.`);
 			},
 			err: async error => this.container.logger.error(error),
 		});
