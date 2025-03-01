@@ -1,14 +1,16 @@
 version: '3.8'
 
 services:
-  cobaltia:
+  frog-bot:
     build: ./
     container_name: frog-bot
     depends_on:
       - redis
+    environment:
+      - REDIS_URI=redis://frog-redis:6379
     restart: unless-stopped
 
-  redis:
+  frog-redis:
     image: 'redis:alpine'
     container_name: frog-redis
     restart: unless-stopped
