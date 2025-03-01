@@ -69,7 +69,7 @@ export class VoiceExperience extends Listener<typeof Events.VoiceChannelLeave> {
 		});
 
 		message.push(
-			`${member}, You have earned ${bold(amount.toString())} for spending ${formatter.format(elapsed)} in VC.`,
+			`${member}, You have earned ${bold(amount.toString())} experience for spending ${formatter.format(elapsed)} in VC.`,
 		);
 		await this.sendMessage(guild, message.join('\n'));
 	}
